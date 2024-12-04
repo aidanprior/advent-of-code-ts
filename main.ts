@@ -70,7 +70,7 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     } catch (error: unknown) {
       if (
         error instanceof Error &&
-        !/^Error: ENOENT:/.test(error.message ?? 'No message')
+        !/^ENOENT:/.test(error.message ?? 'No message')
       ) {
         console.error('Error While trying to read input:', error);
         return;
