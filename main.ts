@@ -34,6 +34,17 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
 
   if (testInput && showParsed === undefined) showParsed = true;
   if (showParsed === undefined) showParsed = false;
+  try {
+    testInput = (
+      await readFile(testInput ?? 'No Test Input File Specified')
+    ).toString();
+  } catch (error) {
+    console.debug(
+      `(${testInput
+        ?.slice(0, 10)
+        .trim()}...) could not be resolved to a file. It is being treated as raw input`
+    );
+  }
 
   let parse, A, B;
   try {
