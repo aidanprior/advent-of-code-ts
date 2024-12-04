@@ -7,7 +7,3 @@ export function parse(rawInput: string): parsedInput {
 export function A(input: parsedInput): number {
   return 0;
 }
-
-export function B(input: parsedInput): number {
-  return 0;
-}

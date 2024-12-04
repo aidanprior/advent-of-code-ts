@@ -60,11 +60,20 @@ AOC_SESSION=<your-session-token>
 
   Replace `<day>` with the day number you want to run (e.g., `1` for Day 1).
 
-- To run on test input, include it in quotes as a commandline argument:
+- To run on test input:
 
-  ```sh
-  npm start <day> "<test-input>"
-  ```
+  - Include it in quotes as a commandline argument:
+
+    ```sh
+    npm start <day> "<test-input>"
+    ```
+
+    or
+
+  - Include a filepath to test input
+    ```sh
+    npm start <day> <test-input-file>
+    ```
 
 - If you would like to see the parsed input, include true as a commandline argument
 
