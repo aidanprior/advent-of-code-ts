@@ -48,6 +48,7 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     }
     const template = await readFile('./solutions/day0.ts', 'utf-8');
     await writeFile(`./solutions/day${day}.ts`, template);
+    console.log(`Day ${day} created from template`);
   }
 
   let rawInput: string = 'No input';
