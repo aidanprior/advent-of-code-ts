@@ -1,9 +1,13 @@
 {
+  "name": "advent-of-code-ts",
+  "scripts": {
+    "start": "tsx main.ts"
+  },
   "devDependencies": {
-    "@types/node": "^22.10.1",
-    "tsx": "^4.19.2"
+    "@types/node": "^22.10.1"
   },
   "dependencies": {
+    "tsx": "^4.19.2",
     "clipboardy": "^4.0.0",
     "dotenv": "^16.4.7"
   }
