@@ -4,11 +4,12 @@
     "start": "tsx main.ts"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1"
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "tsx": "^4.19.2",
     "clipboardy": "^4.0.0",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.2"
   }
 }
