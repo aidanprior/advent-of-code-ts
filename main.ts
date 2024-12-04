@@ -37,12 +37,17 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
 
   let parse, A, B;
   try {
-    const module = await import(`./day${day}.ts`);
+    const module = await import(`./solutions/day${day}.ts`);
     A = module.A;
     B = module.B;
     parse = module.parse;
   } catch (error) {
-    console.error('Error While trying to import day:', error);
+    if (!/Cannot find module/.test(error.message)) {
+      console.error('Error While trying to import day:', error);
+      return;
+    }
+    const template = await readFile('./solutions/day0.ts', 'utf-8');
+    await writeFile(`./solutions/day${day}.ts`, template);
   }
 
   let rawInput: string = 'No input';
