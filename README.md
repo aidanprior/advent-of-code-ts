@@ -78,6 +78,12 @@ AOC_SESSION=<your-session-token>
     npm start <day> "<test-input>" false
     ```
 
+- To setup a new day's solution file, just run the script with the desired number
+  ```sh
+  npm start <day>
+  ```
+  A new file will be copied from the `day0.ts` template. _(feel free to edit this template as needed)_
+
 ### License
 
 This project is licensed under the MIT License.
