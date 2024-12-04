@@ -55,7 +55,7 @@ AOC_SESSION=<your-session-token>
 - To run the solution for a specific day, use the following command:
 
   ```sh
-  npx tsx main.ts <day>
+  npm start <day>
   ```
 
   Replace `<day>` with the day number you want to run (e.g., `1` for Day 1).
@@ -63,19 +63,19 @@ AOC_SESSION=<your-session-token>
 - To run on test input, include it in quotes as a commandline argument:
 
   ```sh
-  npx tsx main.ts <day> "<test-input>"
+  npm start <day> "<test-input>"
   ```
 
 - If you would like to see the parsed input, include true as a commandline argument
 
   ```sh
-  npx tsx main.ts <day> true
+  npm start <day> true
   ```
 
   - By default, if you specify test input, the parsed input will be printed, but you can explicitly turn this off
 
     ```sh
-    npx tsx main.ts <day> "<test-input>" false
+    npm start <day> "<test-input>" false
     ```
 
 ### License
