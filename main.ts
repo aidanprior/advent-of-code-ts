@@ -52,8 +52,8 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     A = module.A;
     B = module.B;
     parse = module.parse;
-  } catch (error) {
-    if (!/Cannot find module/.test(error.message)) {
+  } catch (error: unknown) {
+    if (error instanceof Error && !/Cannot find module/.test(error.message)) {
       console.error('Error While trying to import day:', error);
       return;
     }
@@ -67,8 +67,11 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
   else {
     try {
       rawInput = await readFile(`./input/day${day}.txt`, 'utf-8');
-    } catch (error) {
-      if (!/^Error: ENOENT:/.test(error)) {
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        !/^Error: ENOENT:/.test(error.message ?? 'No message')
+      ) {
         console.error('Error While trying to read input:', error);
         return;
       }
@@ -113,7 +116,7 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     console.log('B: ', BSoluction);
     clipboardy.writeSync(BSoluction.toString());
   } catch (error) {
-    if (!/is not a function/.test(error))
+    if (error instanceof Error && !/is not a function/.test(error.message))
       console.warn('Error while trying to run day:', error);
   }
 }
