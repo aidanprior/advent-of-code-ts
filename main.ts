@@ -31,7 +31,6 @@ import clipboardy from 'clipboardy';
 
 async function runDay(day: number, testInput?: string, showParsed?: boolean) {
   console.log(`Day ${day}`);
-
   if (testInput && showParsed === undefined) showParsed = true;
   if (showParsed === undefined) showParsed = false;
   try {
@@ -52,8 +51,8 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     A = module.A;
     B = module.B;
     parse = module.parse;
-  } catch (error) {
-    if (!/Cannot find module/.test(error.message)) {
+  } catch (error: unknown) {
+    if (error instanceof Error && !/Cannot find module/.test(error.message)) {
       console.error('Error While trying to import day:', error);
       return;
     }
@@ -67,8 +66,11 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
   else {
     try {
       rawInput = await readFile(`./input/day${day}.txt`, 'utf-8');
-    } catch (error) {
-      if (!/^Error: ENOENT:/.test(error)) {
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        !/^Error: ENOENT:/.test(error.message ?? 'No message')
+      ) {
         console.error('Error While trying to read input:', error);
         return;
       }
@@ -113,7 +115,7 @@ async function runDay(day: number, testInput?: string, showParsed?: boolean) {
     console.log('B: ', BSoluction);
     clipboardy.writeSync(BSoluction.toString());
   } catch (error) {
-    if (!/is not a function/.test(error))
+    if (error instanceof Error && !/is not a function/.test(error.message))
       console.warn('Error while trying to run day:', error);
   }
 }
@@ -122,8 +124,10 @@ const day: number = Number(process.argv[2]) ?? 1;
 const testInput: string | undefined = /^(true|false)$/.test(process.argv[3])
   ? undefined
   : process.argv[3];
-const showParsed: boolean = /^(true|false)$/.test(process.argv[3])
+const showParsed: boolean | undefined = /^(true|false)$/.test(process.argv[3])
   ? process.argv[3] === 'true'
-  : (process.argv[4] ?? 'false') === 'true';
+  : process.argv[4] === undefined
+  ? undefined
+  : process.argv[4] === 'true';
 
 runDay(day, testInput, showParsed);
