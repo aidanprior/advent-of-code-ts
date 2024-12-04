@@ -1,6 +1,7 @@
-# Advent Of Code
+# Runner for Typescript Advent Of Code Solutions
 
 This repository contains a commandline runner for Advent Of Code challenges implemented in TypeScript.
+
 With a valid session token from [Advent Of Code](https://adventofcode.com/),
 It will download your puzzle inputs automatically, or you can manually specify test input
 
@@ -17,7 +18,7 @@ It will download your puzzle inputs automatically, or you can manually specify t
 
 ```sh
 git clone https://github.com/aidanprior/advent-of-code-ts.git
-cd advent-of-code
+cd advent-of-code-ts
 ```
 
 2. Install the dependencies:
@@ -54,12 +55,28 @@ AOC_SESSION=<your-session-token>
 - To run the solution for a specific day, use the following command:
 
   ```sh
-  npx ts-node main.ts <day>
+  npx tsx main.ts <day>
   ```
 
   Replace `<day>` with the day number you want to run (e.g., `1` for Day 1).
 
-- To
+- To run on test input, include it in quotes as a commandline argument:
+
+  ```sh
+  npx tsx main.ts <day> "<test-input>"
+  ```
+
+- If you would like to see the parsed input, include true as a commandline argument
+
+  ```sh
+  npx tsx main.ts <day> true
+  ```
+
+  - By default, if you specify test input, the parsed input will be printed, but you can explicitly turn this off
+
+    ```sh
+    npx tsx main.ts <day> "<test-input>" false
+    ```
 
 ### License
 

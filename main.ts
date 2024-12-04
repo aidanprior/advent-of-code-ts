@@ -29,10 +29,12 @@ import 'dotenv/config';
 import { readFile, writeFile } from 'fs/promises';
 import clipboardy from 'clipboardy';
 
-async function runDay(day: number, testInput?: string, showParsed = false) {
+async function runDay(day: number, testInput?: string, showParsed?: boolean) {
   console.log(`Day ${day}`);
 
-  if (testInput) showParsed = true;
+  if (testInput && showParsed === undefined) showParsed = true;
+  if (showParsed === undefined) showParsed = false;
+
   let parse, A, B;
   try {
     const module = await import(`./day${day}.ts`);
