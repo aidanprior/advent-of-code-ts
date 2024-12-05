@@ -236,11 +236,11 @@ if (help) {
       console.table(parsedInput);
     }
 
-    const ASoluction = A(verbose, parsedInput);
+    const ASoluction = A(parsedInput, verbose);
     console.log('A: ', ASoluction);
     clipboardy.writeSync(ASoluction.toString());
 
-    const BSoluction = B(verbose, parsedInput);
+    const BSoluction = B(parsedInput, verbose);
     console.log('B: ', BSoluction);
     clipboardy.writeSync(BSoluction.toString());
   } catch (error) {
