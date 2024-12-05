@@ -236,13 +236,25 @@ if (help) {
       console.table(parsedInput);
     }
 
-    const ASoluction = A(parsedInput, verbose);
-    console.log('A: ', ASoluction);
-    clipboardy.writeSync(ASoluction.toString());
+    async function runSolution(
+      solver: (parsedInput: unknown, debug: boolean) => number,
+      isA: boolean
+    ) {
+      const soluction = solver(parsedInput, verbose);
+      console.log(isA ? 'A: ' : 'B: ', soluction);
+      clipboardy.writeSync(soluction.toString());
+      const response = await fetch(
+        `https://adventofcode.com/2024/day/5/answer?level=${
+          isA ? 1 : 2
+        }&answer=${soluction}`
+      );
+      const html = await response.text();
+      const responseSentence = html.match(/<main><article><p>.*?\./)?.[0];
+      console.log(responseSentence);
+    }
 
-    const BSoluction = B(parsedInput, verbose);
-    console.log('B: ', BSoluction);
-    clipboardy.writeSync(BSoluction.toString());
+    await runSolution(A, true);
+    await runSolution(B, false);
   } catch (error) {
     if (error instanceof Error && !/is not a function/.test(error.message))
       console.warn('Error while trying to run day:', error);
