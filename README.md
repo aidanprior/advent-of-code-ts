@@ -1,6 +1,6 @@
 # Runner for Typescript Advent Of Code Solutions
 
-This repository contains a commandline runner for Advent Of Code challenges implemented in TypeScript.
+Generates solution files from a template, Downloads and saves puzzle input, Runs solutions, Copies answers to clipboard.
 
 With a valid session token from [Advent Of Code](https://adventofcode.com/),
 It will download your puzzle inputs automatically, or you can manually specify test input
@@ -52,47 +52,90 @@ AOC_SESSION=<your-session-token>
 
 ### Running the Solution
 
-- To run the solution for a specific day, use the following command:
+```sh
+npm start day-number [--file-input file] [-vp]
+npm start --day day-number [--show-parsed --verbose]
+npm start -- --help
+```
 
-  ```sh
-  npm start <day>
-  ```
+````
 
-  Replace `<day>` with the day number you want to run (e.g., `1` for Day 1).
+#### Examples
 
-- To run on test input:
+1. **Run solution A (and B if defined) for day 2**
 
-  - Include it in quotes as a commandline argument:
+   ```sh
+   npm start 2
+   ```
 
-    ```sh
-    npm start <day> "<test-input>"
-    ```
+2. **Run solution for day 1 and print parsed input**
 
-    or
+   ```sh
+   npm start -d=1 -p
+   ```
 
-  - Include a filepath to test input
-    ```sh
-    npm start <day> <test-input-file>
-    ```
+3. **Run solution for day 1 with debug logging and print parsed input**
 
-- If you would like to see the parsed input, include true as a commandline argument
+   ```sh
+   npm start 1 --show-parsed -v
+   ```
 
-  ```sh
-  npm start <day> true
-  ```
+4. **Run solution for day 1 with raw input**
 
-  - By default, if you specify test input, the parsed input will be printed, but you can explicitly turn this off
+   ```sh
+   npm start --day 1 -r="3   4
+   4   3
+   2   5
+   1   3
+   3   9
+   3   3
+   "
+   ```
 
-    ```sh
-    npm start <day> "<test-input>" false
-    ```
+5. **Setting a session token for automatic downloading**
 
-- To setup a new day's solution file, just run the script with the desired number
-  ```sh
-  npm start <day>
-  ```
-  A new file will be copied from the `day0.ts` template. _(feel free to edit this template as needed)_
+   ```sh
+   npm start -- --show-parsed
+   ```
+
+   Note the empty double dash needed for npm not to claim the options for itself.
+
+6. **Run solution(s) for day 10 on a test input file with verbose logging**
+   ```sh
+   npm start -vd 1 --file-input ./input/day1Test1.txt
+   ```
+
+#### Options
+
+- `-d, --day integer`
+  The Advent of Code Day to run the solution file for.
+  Looks for files matching the following format `./solutions/day<day#>.ts`
+  If no file exists, it is created from the `./solutions/day0.ts` template
+
+- `-v, --verbose`
+  Print extra information from the solution file (passes the debug argument to your solver, up to you to use it!)
+
+- `-p, --show-parsed`
+  Print the results from the parse function
+
+- `-r, --raw-input string`
+  Puzzle input
+
+- `-f, --file-input file`
+  The file to load puzzle input from.
+  By default will look for a `./input/day<Day#>.txt` file. If no file is found, (or this option is specified)
+  it will download input from Advent Of Code [https://adventofcode.com](https://adventofcode.com)
+
+- `--set-session-token string`
+  Saves the session token for downloading from Advent Of Code [https://adventofcode.com](https://adventofcode.com).
+  To get your session token, look in your cookies for adventofcode.com
+
+- `-h, --help`
+  Display this usage guide
+
+### Project home: [https://github.com/aidanprior/advent-of-code-ts](https://github.com/aidanprior/advent-of-code-ts)
 
 ### License
 
 This project is licensed under the MIT License.
+````
