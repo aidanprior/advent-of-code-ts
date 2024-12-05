@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { appendFile, readFile, writeFile } from 'fs/promises';
 import commandLineArgs from 'command-line-args';
 import clipboardy from 'clipboardy';
+import { JSDOM } from 'jsdom';
 import { exit } from 'process';
 
 // Commandline options
@@ -242,19 +243,32 @@ if (help) {
       const soluction = solver(parsedInput, verbose);
       console.log(isA ? 'A: ' : 'B: ', soluction);
       if (!rawInput && !fileInput) {
+        console.log('Sending solution to adventofcode.com...\n');
         clipboardy.writeSync(soluction.toString());
         const response = await fetch(
-          `https://adventofcode.com/2024/day/5/answer?level=${
-            isA ? 1 : 2
-          }&answer=${soluction}`
+          `https://adventofcode.com/2024/day/${day}/answer`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              cookie: `session=${process.env.AOC_SESSION}`,
+            },
+            body: new URLSearchParams({
+              level: (isA ? 1 : 2).toString(),
+              answer: soluction.toString(),
+            }),
+          }
         );
         const html = await response.text();
-        const responseSentence = html.match(/<main><article><p>.*?\./)?.[0];
+        const { document } = new JSDOM(html).window;
+        const responseSentence =
+          document.querySelector('article > p')?.textContent ??
+          'could not parse response p';
         console.log(responseSentence);
       }
     }
 
-    await runSolution(A, true);
+    if (!B) await runSolution(A, true);
     await runSolution(B, false);
   } catch (error) {
     if (error instanceof Error && !/is not a function/.test(error.message))
