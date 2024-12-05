@@ -169,7 +169,6 @@ if (help) {
     exit(0);
   }
 
-  if (rawInput && showParsed === undefined) showParsed = true;
   if (showParsed === undefined) showParsed = false;
   let input = rawInput;
   if (fileInput) {
