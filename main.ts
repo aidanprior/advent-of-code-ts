@@ -241,15 +241,17 @@ if (help) {
     ) {
       const soluction = solver(parsedInput, verbose);
       console.log(isA ? 'A: ' : 'B: ', soluction);
-      clipboardy.writeSync(soluction.toString());
-      const response = await fetch(
-        `https://adventofcode.com/2024/day/5/answer?level=${
-          isA ? 1 : 2
-        }&answer=${soluction}`
-      );
-      const html = await response.text();
-      const responseSentence = html.match(/<main><article><p>.*?\./)?.[0];
-      console.log(responseSentence);
+      if (!rawInput && !fileInput) {
+        clipboardy.writeSync(soluction.toString());
+        const response = await fetch(
+          `https://adventofcode.com/2024/day/5/answer?level=${
+            isA ? 1 : 2
+          }&answer=${soluction}`
+        );
+        const html = await response.text();
+        const responseSentence = html.match(/<main><article><p>.*?\./)?.[0];
+        console.log(responseSentence);
+      }
     }
 
     await runSolution(A, true);
