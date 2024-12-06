@@ -1,9 +1,9 @@
-type parsedInput = unknown;
+type ParsedInput = unknown;
 
-export function parse(rawInput: string): parsedInput {
+export function parse(rawInput: string): ParsedInput {
   return;
 }
 
-export function A(input: parsedInput, debug = false): number {
-  return 0;
+export function A(input: ParsedInput, debug = 0): number {
+  return NaN;
 }

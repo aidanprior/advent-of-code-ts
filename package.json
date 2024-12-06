@@ -5,6 +5,7 @@
   },
   "devDependencies": {
     "@types/command-line-args": "^5.2.3",
+    "@types/command-line-usage": "^5.0.4",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
