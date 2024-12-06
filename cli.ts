@@ -76,17 +76,35 @@ you can specify the exact file to load input from
     typeLabel: '{underline string}',
   },
   {
-    name: 'solver',
-    description: `Specifies which solutions to generate, arguments must be a combination of A, B or nothing.
-      {dim If not specified, will run B (if implemented), or A.
-To not run either solver use an} {italic empty equal sign}
-{cyan npm start -- 1 -s{red =}}
+    name: 'solve-a',
+    alias: 'A',
+    description: `Explicitly run solver A
+
+    {bold Default behavior without this option}
+    Use solver A unless solver B is defined
       `,
-    type: String,
-    typeLabel: '{underline A} {underline B} {red ={underline  }}',
-    alias: 's',
-    multiple: true,
-    defaultValue: ['default'],
+    type: Boolean,
+  },
+  {
+    name: 'solve-b',
+    alias: 'B',
+    description: `Explicitly run solver B
+
+    {bold Default behavior without this option}
+    Use solver A unless solver B is defined
+      `,
+    type: Boolean,
+  },
+  {
+    name: 'no-solver',
+    description: `Explicitly do not run either solver
+
+    {bold Take precidence over {reset.cyan --solve-a} and {reset.cyan --solve-b} if multiple are used}
+
+    {bold Default behavior without this option}
+    Use solver A unless solver B is defined
+      `,
+    type: Boolean,
   },
   {
     name: 'submit',
@@ -117,8 +135,8 @@ export function showHelpAndExit() {
       {
         header: 'Synopsis',
         content: [
-          '{cyan npm start {bold.red --} [{bold --day | -d}] {underline day} [{bold -f | --file-input}[=] {underline file}] [{bold -p | --show-parsed}] [{bold --submit}] [{bold -s | --solver} {underline A} {underline B}] [{bold -v | --verbose} {underline integer}]}\n',
-          '{cyan npm start {bold.red --} [{bold --day | -d}] {underline day} [{bold -r | --raw-input}[=] {underline string}] [{bold --show-parsed --submit}] [{bold --submit}] [{bold -s | --solver} {underline A} {underline B}] [{bold -v | --verbose} {underline integer}]}\n',
+          '{cyan npm start {bold.red --} [{bold --day | -d}] {underline day} [{bold -f | --file-input}[=] {underline file}] [{bold -p | --show-parsed}] [{bold --submit}] [{bold -A | --solve-a}] [{bold -B | --solve-b}] [{bold --no-solver}] [{bold -v | --verbose} {underline integer}]}\n',
+          '{cyan npm start {bold.red --} [{bold --day | -d}] {underline day} [{bold -r | --raw-input}[=] {underline string}] [{bold --show-parsed --submit}] [{bold --submit}] [{bold -A | --solve-a}] [{bold -B | --solve-b}] [{bold --no-solver}] [{bold -v | --verbose} {underline integer}]}\n',
           '{cyan npm start {bold.red --} {bold --help}}\n',
           '{cyan npm start {bold.red --} {bold --set-session-token}[=] {underline string}}\n',
           '\n{italic.red Note the empty double dash needed for npm not to claim the options for itself}',
@@ -152,17 +170,15 @@ export function showHelpAndExit() {
           },
           {
             desc: '5. Submit the solution to part A',
-            example: '{cyan npm start -- 5 -s A --submit}\n',
+            example: '{cyan npm start -- 5 -A --submit}\n',
           },
           {
             desc: '6. Parse test input, without running either solver',
-            example: `{cyan npm start -- -d 3 --solver= --show-parsed}
-            {italic or}
-            {cyan npm start -- -d 3 -ps=}
+            example: `{cyan npm start -- -d 3 --no-solver --show-parsed}
             `,
           },
           {
-            desc: '7. Setting a session token for automatic downloading\n',
+            desc: '7. Setting a session token for automatic downloading or submission\n',
             example: `{cyan npm start -- 
 --set-session-token 3owsdloi{dim.red.italic ...} }`,
           },

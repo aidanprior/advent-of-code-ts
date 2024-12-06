@@ -62,12 +62,12 @@ To get your session token from the Advent Of Code website:
 
 ```sh
 npm start -- [--day | -d] day [-f | --file-input[=] file] [-p |
---show-parsed] [--submit] [-s | --solver A B] [-v | --verbose integer]
+--show-parsed] [--submit] [-A | --solve-a] [-B | --solve-b] [--no-solver] [-v | --verbose integer]
 ```
 
 ```sh
 npm start -- [--day | -d] day [-r | --raw-input[=] string] [--show-parsed
---submit] [--submit] [-s | --solver A B] [-v | --verbose integer]
+--submit] [--submit] [-A | --solve-a] [-B | --solve-b] [--no-solver] [-v | --verbose integer]
 ```
 
 ```sh
@@ -121,13 +121,7 @@ _Note the empty double dash needed for npm not to claim the options for itself_
 6. **Parse test input, without running either solver**
 
    ```sh
-   npm start -- -d 3 --solver= --show-parsed
-   ```
-
-   or
-
-   ```sh
-   npm start -- -d 3 -ps=
+   npm start -- -d 3 --no-solver --show-parsed
    ```
 
 7. **Setting a session token for automatic downloading**
@@ -152,7 +146,9 @@ _Note the empty double dash needed for npm not to claim the options for itself_
 | `-r, --raw-input string`     | Raw Puzzle input.                                                                                                                                                                                       |
 | `-f, --file-input file`      | The file to load puzzle input from. By default will look for a `./input/day<day>.txt` file. If no file is found, (or this option is specified) it will download input from Advent Of Code.              |
 | `--set-session-token string` | Saves the session token for downloading from Advent Of Code. To get your session token, look in your cookies for adventofcode.com.                                                                      |
-| `-s, --solver A B =`         | Specifies which solutions to generate, arguments must be a combination of A, B or nothing. If not specified, will run B (if implemented), or A. To not run either solver use an empty equal sign.       |
+| `-A, --solve-a`              | Explicitly run solver A. Default behavior without this option is to use solver A unless solver B is defined.                                                                                            |
+| `-B, --solve-b`              | Explicitly run solver B. Default behavior without this option is to use solver A unless solver B is defined.                                                                                            |
+| `--no-solver`                | Explicitly do not run either solver. Takes precedence over `--solve-a` and `--solve-b` if multiple are used. Default behavior without this option is to use solver A unless solver B is defined.        |
 | `--submit`                   | Submit the solution to https://adventofcode.com/.                                                                                                                                                       |
 | `-h, --help`                 | Display this usage guide.                                                                                                                                                                               |
 
