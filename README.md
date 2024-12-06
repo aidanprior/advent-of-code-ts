@@ -1,16 +1,20 @@
 # Runner for Typescript Advent Of Code Solutions
 
-Generates solution files from a template, Downloads and saves puzzle input, Runs solutions, Copies answers to clipboard.
+- Generates skeleton solution files from a template
+- Downloads and saves puzzle input from [Advent Of Code](https://adventofcode.com/)
+- Runs solutions
+- Copies answers to clipboard
+- Submits answers to [Advent Of Code](https://adventofcode.com/)
 
-With a valid session token from [Advent Of Code](https://adventofcode.com/),
-It will download your puzzle inputs automatically, or you can manually specify test input
+You need a valid session token from [Advent Of Code](https://adventofcode.com/), to download your puzzle inputs automatically, or you can manually specify test input  
+_(see [session token](#getting-the-session-token) for more information)_
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js installed on your machine
-- A session token from the Advent Of Code website _(see below for instructions)_
+- A session token from the Advent Of Code website _(see [session token](#getting-the-session-token) for instructions)_
 
 ### Installation
 
@@ -40,50 +44,66 @@ To get your session token from the Advent Of Code website:
 
 ### Configuration
 
-Edit the `.env.template` file in the root directory by pasting in your session token:
+**Either**
 
-```env
-AOC_SESSION=<your-session-token>
-```
+- Edit the `.env.template` file in the root directory by pasting in your session token:
 
-1. Replace `<your-session-token>` with the value you copied in the previous step.
-2. Remove _template_ from the filename
-   `.env.template` --> `.env`
+  ```env
+  AOC_SESSION=<your-session-token>
+  ```
 
-### Running the Solution
+  1. Replace `<your-session-token>` with the value you copied in the previous step.
+  2. Remove _template_ from the filename
+     `.env.template` --> `.env`
+
+- Use the `--set-session-token` commandline argument _(see [options](#options) for more information)_
+
+### Synopsis
 
 ```sh
-npm start day-number [--file-input file] [-vp]
-npm start --day day-number [--show-parsed --verbose]
+npm start -- [--day | -d] day [-f | --file-input[=] file] [-p |
+--show-parsed] [--submit] [-s | --solver A B] [-v | --verbose integer]
+```
+
+```sh
+npm start -- [--day | -d] day [-r | --raw-input[=] string] [--show-parsed
+--submit] [--submit] [-s | --solver A B] [-v | --verbose integer]
+```
+
+```sh
 npm start -- --help
 ```
 
-````
+```sh
+npm start -- --set-session-token[=] string
+```
+
+_Note the empty double dash needed for npm not to claim the options for itself_
 
 #### Examples
 
-1. **Run solution A (and B if defined) for day 2**
+1. **Run solution A (or B if defined) for day 2**
 
    ```sh
-   npm start 2
+   npm start -- 2
    ```
 
 2. **Run solution for day 1 and print parsed input**
 
    ```sh
-   npm start -d=1 -p
+   npm start -- -d=1 -p
    ```
 
 3. **Run solution for day 1 with debug logging and print parsed input**
 
    ```sh
-   npm start 1 --show-parsed -v
+   npm start -- 1 --show-parsed --verbose
    ```
 
 4. **Run solution for day 1 with raw input**
 
    ```sh
-   npm start --day 1 -r="3   4
+   npm start -- --day 1 -r="3   4
    4   3
    2   5
    1   3
@@ -92,50 +112,52 @@ npm start -- --help
    "
    ```
 
-5. **Setting a session token for automatic downloading**
+5. **Submit the solution to part A**
 
    ```sh
-   npm start -- --show-parsed
+   npm start -- 5 -s A --submit
    ```
 
-   Note the empty double dash needed for npm not to claim the options for itself.
+6. **Parse test input, without running either solver**
 
-6. **Run solution(s) for day 10 on a test input file with verbose logging**
    ```sh
-   npm start -vd 1 --file-input ./input/day1Test1.txt
+   npm start -- -d 3 --solver= --show-parsed
+   ```
+
+   or
+
+   ```sh
+   npm start -- -d 3 -ps=
+   ```
+
+7. **Setting a session token for automatic downloading**
+
+   ```sh
+   npm start -- --set-session-token 3owsdloi...
+   ```
+
+8. **Run solution(s) for day 10 on a test input file with verbose logging level 2**
+
+   ```sh
+   npm start -v 2d 10 --file-input ./input/day1Test1.txt
    ```
 
 #### Options
 
-- `-d, --day integer`
-  The Advent of Code Day to run the solution file for.
-  Looks for files matching the following format `./solutions/day<day#>.ts`
-  If no file exists, it is created from the `./solutions/day0.ts` template
-
-- `-v, --verbose`
-  Print extra information from the solution file (passes the debug argument to your solver, up to you to use it!)
-
-- `-p, --show-parsed`
-  Print the results from the parse function
-
-- `-r, --raw-input string`
-  Puzzle input
-
-- `-f, --file-input file`
-  The file to load puzzle input from.
-  By default will look for a `./input/day<Day#>.txt` file. If no file is found, (or this option is specified)
-  it will download input from Advent Of Code [https://adventofcode.com](https://adventofcode.com)
-
-- `--set-session-token string`
-  Saves the session token for downloading from Advent Of Code [https://adventofcode.com](https://adventofcode.com).
-  To get your session token, look in your cookies for adventofcode.com
-
-- `-h, --help`
-  Display this usage guide
+| Option                       | Description                                                                                                                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-d, --day integer`          | The Advent of Code day to run the solution file for. Looks for files matching the following format `./solutions/day<day>.ts`. If no file exists, it is created from the `./solutions/day0.ts` template. |
+| `-v, --verbose [integer]`    | Print extra information from the solver. Defaults to Infinity (all levels). Passes the debug argument to your solver; it is up to you to use it!                                                        |
+| `-p, --show-parsed`          | Print the results from the parse function.                                                                                                                                                              |
+| `-r, --raw-input string`     | Raw Puzzle input.                                                                                                                                                                                       |
+| `-f, --file-input file`      | The file to load puzzle input from. By default will look for a `./input/day<day>.txt` file. If no file is found, (or this option is specified) it will download input from Advent Of Code.              |
+| `--set-session-token string` | Saves the session token for downloading from Advent Of Code. To get your session token, look in your cookies for adventofcode.com.                                                                      |
+| `-s, --solver A B =`         | Specifies which solutions to generate, arguments must be a combination of A, B or nothing. If not specified, will run B (if implemented), or A. To not run either solver use an empty equal sign.       |
+| `--submit`                   | Submit the solution to https://adventofcode.com/.                                                                                                                                                       |
+| `-h, --help`                 | Display this usage guide.                                                                                                                                                                               |
 
 ### Project home: [https://github.com/aidanprior/advent-of-code-ts](https://github.com/aidanprior/advent-of-code-ts)
 
 ### License
 
 This project is licensed under the MIT License.
-````
